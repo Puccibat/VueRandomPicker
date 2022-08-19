@@ -1,17 +1,38 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <AddInput @data="displayItems" />
+  <div v-for="item in itemsArray" :key="item">
+    <h3>{{ item }}</h3>
+  </div>
+  <button @click="random">Random select</button>
+  <Result v-if="itemSelected" :itemSelected="itemSelected" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AddInput from './components/AddInput.vue';
+import Result from './components/Result.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    AddInput,
+    Result,
+  },
+  data() {
+    return {
+      itemsArray: [],
+      itemSelected: '',
+    };
+  },
+  methods: {
+    displayItems(items) {
+      this.itemsArray = items;
+    },
+    random() {
+      this.itemSelected =
+        this.itemsArray[Math.floor(Math.random() * this.itemsArray.length)];
+    },
+  },
+};
 </script>
 
 <style>
